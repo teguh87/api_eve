@@ -1,0 +1,17 @@
+from eve import Eve
+from ext.user import before_save_user
+from ext.token import parse_token
+from eve.auth import TokenAuth
+from bson.objectid import ObjectId
+
+
+class Auth(TokenAuth):
+    def check_auth(self, token,  allowed_roles, resource, method):
+        claim = parse_token(token)
+        users = app.data.driver.db['user']
+        user = users.find_one({"_id":ObjectId(claim['uid'])})
+        return user
+
+app = Eve(auth=Auth)
+app.on_insert_user += before_save_user
+

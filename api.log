@@ -1,0 +1,2 @@
+initialize loggin request
+paylod {u'username': u'admin@gmail.com', u'password': u'123456'}
